@@ -55,5 +55,4 @@ game:GetService("UserInputService").InputEnded:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.E then
         removeGreenBoxes()
     end
-en
-
+end)
