@@ -1,10 +1,5 @@
---FOR MORE SCRIPTS PLS SUB--
---no loadstring--
---press e--
-
-
--- Function to highlight all players
-local function highlightPlayers()
+-- Function to put a green box on all players
+local function putGreenBoxOnPlayers()
     -- Get all players in the game
     local players = game:GetService("Players"):GetPlayers()
     
@@ -12,20 +7,24 @@ local function highlightPlayers()
     for _, player in ipairs(players) do
         -- Check if the player has a character and is not the local player
         if player.Character and player ~= game:GetService("Players").LocalPlayer then
-            -- Create a highlight effect
-            local highlight = Instance.new("SelectionBox")
-            highlight.Name = "PlayerHighlight"
-            highlight.Adornee = player.Character.PrimaryPart
-            highlight.Color3 = Color3.fromRGB(255, 255, 0) -- Yellow color
+            -- Create a green box part
+            local greenBox = Instance.new("Part")
+            greenBox.Name = "PlayerGreenBox"
+            greenBox.Size = Vector3.new(2, 2, 2)
+            greenBox.BrickColor = BrickColor.new("Bright green")
             
-            -- Attach the highlight effect to the player's character
-            highlight.Parent = player.Character
+            -- Attach the green box to the player's character
+            greenBox.Parent = player.Character
+            
+            -- Position the green box above the player's head
+            local humanoidRootPart = player.Character:WaitForChild("HumanoidRootPart")
+            greenBox.Position = humanoidRootPart.Position + Vector3.new(0, 3, 0)
         end
     end
 end
 
--- Function to remove highlights from all players
-local function removeHighlights()
+-- Function to remove the green boxes from all players
+local function removeGreenBoxes()
     -- Get all players in the game
     local players = game:GetService("Players"):GetPlayers()
     
@@ -33,10 +32,10 @@ local function removeHighlights()
     for _, player in ipairs(players) do
         -- Check if the player has a character and is not the local player
         if player.Character and player ~= game:GetService("Players").LocalPlayer then
-            -- Find and remove the highlight effect from the player's character
-            local highlight = player.Character:FindFirstChild("PlayerHighlight")
-            if highlight then
-                highlight:Destroy()
+            -- Find and remove the green box from the player's character
+            local greenBox = player.Character:FindFirstChild("PlayerGreenBox")
+            if greenBox then
+                greenBox:Destroy()
             end
         end
     end
@@ -44,17 +43,17 @@ end
 
 -- Bind the functions to key presses
 
--- When "E" key is pressed, call the highlightPlayers function
+-- When "E" key is pressed, call the putGreenBoxOnPlayers function
 game:GetService("UserInputService").InputBegan:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.E then
-        highlightPlayers()
+        putGreenBoxOnPlayers()
     end
 end)
 
--- When "E" key is released, call the removeHighlights function
+-- When "E" key is released, call the removeGreenBoxes function
 game:GetService("UserInputService").InputEnded:Connect(function(input)
     if input.KeyCode == Enum.KeyCode.E then
-        removeHighlights()
+        removeGreenBoxes()
     end
-end)
+en
 
